@@ -55,6 +55,7 @@ string LinuxParser::Kernel() {
 
 // DONE BONUS: Update this to use std::filesystem
 std::vector<int> LinuxParser::Pids() {
+
     std::vector<int> pids;
     for (const auto & entry : fs::directory_iterator(kProcDirectory)){
         std::string str_str = entry.path().string();
@@ -67,8 +68,8 @@ std::vector<int> LinuxParser::Pids() {
     }
     return pids;
 }
-
-/*  
+/*
+  
   vector<int> pids;
   DIR* directory = opendir(kProcDirectory.c_str());
   struct dirent* file;
@@ -132,6 +133,7 @@ long LinuxParser::UpTime() {
     linestream >> uptime;
     return uptime;
   }
+  return 0;
  }
 
 // DONE: Read and return the number of jiffies for the system
@@ -164,7 +166,7 @@ long LinuxParser::ActiveJiffies(int pid) {
 }
 
 
-// TODO: Read and return the number of active jiffies for the system
+// DONE: Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() { 
     long activeJiffies = 0;
     vector<std::string> cpuUtil = LinuxParser::CpuUtilization();
@@ -176,13 +178,13 @@ long LinuxParser::ActiveJiffies() {
 }
 
 
-// TODO: Read and return the number of idle jiffies for the system
+// DONE: Read and return the number of idle jiffies for the system
 long LinuxParser::IdleJiffies() { 
     vector<string> cpuUtil = LinuxParser::CpuUtilization();
     return std::stol(cpuUtil[kIdle_]) + std::stol(cpuUtil[kIOwait_]);
  }
 
-// TODO: Read and return CPU utilization
+// DONE: Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() { 
     vector<string> values;
     std::ifstream filestream(kProcDirectory + kStatFilename);
@@ -202,7 +204,7 @@ vector<string> LinuxParser::CpuUtilization() {
 
  }
 
-// TODO: Read and return the total number of processes
+// DONE: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { 
   std::ifstream filestream(kProcDirectory + kStatFilename);
     if (filestream.is_open()) {
@@ -220,7 +222,7 @@ int LinuxParser::TotalProcesses() {
     return 0;
  }
 
-// TODO: Read and return the number of running processes
+// DONE: Read and return the number of running processes
 int LinuxParser::RunningProcesses() { 
     std::ifstream filestream(kProcDirectory + kStatFilename);
     if (filestream.is_open()) {

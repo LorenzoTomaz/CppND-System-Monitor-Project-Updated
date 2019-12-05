@@ -9,7 +9,8 @@ It contains relevant attributes as shown below
 */
 class Process {
  public:
-  Process(const int& pid) : pid_(pid) { }
+  explicit Process(const int& pid);  
+  ~Process() = default;
   int Pid();                               // TODO: See src/process.cpp
   std::string User();                      // TODO: See src/process.cpp
   std::string Command();                   // TODO: See src/process.cpp

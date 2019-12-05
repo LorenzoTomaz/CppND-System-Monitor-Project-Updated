@@ -11,17 +11,24 @@ using std::string;
 using std::to_string;
 using std::vector;
 
+Process::Process(const int& pid) : pid_(pid) { }
+
 
 // DONE: Return this process's ID
 int Process::Pid() { return pid_; }
 
 // DONE: Return this process's CPU utilization
 float Process::CpuUtilization() const { 
-    const float clkSysHertz = sysconf(_SC_CLK_TCK);
+    /*const float clkSysHertz = sysconf(_SC_CLK_TCK);
     const float activeTotalTimePIDSeconds = static_cast<float>(LinuxParser::ActiveJiffies(pid_))/clkSysHertz;
     const float upTimeSeconds = static_cast<float>(LinuxParser::UpTime());
     const float upTimePIDSeconds = static_cast<float>(LinuxParser::UpTime(pid_));
-    return (activeTotalTimePIDSeconds / (upTimeSeconds - upTimePIDSeconds));
+    return (activeTotalTimePIDSeconds / (upTimeSeconds - upTimePIDSeconds));*/
+    const float tck = sysconf(_SC_CLK_TCK);
+    const float tot = static_cast<float>(LinuxParser::ActiveJiffies(pid_)) / tck;
+    const auto up = LinuxParser::UpTime();
+    const auto pUp = LinuxParser::UpTime(pid_);
+    return tot / static_cast<float>(up - pUp);
 }
 
 

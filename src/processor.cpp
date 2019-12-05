@@ -8,7 +8,7 @@ float Processor::Utilization() {
     float cpu = 0.0;
     if (total != total_) {cpu = ((active - active_) / (total - total_));}
     active_ = active;
-    total_ = total;
+    total_ = total; 
     return cpu;
 
 }
